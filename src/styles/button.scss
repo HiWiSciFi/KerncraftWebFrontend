@@ -1,0 +1,19 @@
+button {
+	background-color: #444444;
+	color: #e2e2e2;
+	border-color: #ff3e00;
+	border-radius: 1em;
+	font-family: monospace;
+}
+
+button:hover {
+	background-color: #333333;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+button:active {
+	background-color: #222222;
+}

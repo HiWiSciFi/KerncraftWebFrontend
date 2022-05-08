@@ -1,0 +1,15 @@
+@import './button.scss';
+
+button.top {
+	border-top-left-radius: 1em;
+	border-bottom-left-radius: 0;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 0;
+}
+
+button.bottom {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 1em;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 1em;
+}

@@ -1,0 +1,11 @@
+select {
+	border-radius: 1em;
+	background-color: #444444;
+	color: #e2e2e2;
+	border-color: #ff3e00;
+}
+
+select:hover {
+	background-color: #333333;
+	cursor: pointer;
+}

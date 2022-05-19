@@ -1,30 +1,30 @@
 <script lang="ts">
-	import { cachePredictors } from '../ExecutionStore';
+	import { units } from '../ExecutionStore';
 	import { runConfiguration } from '../RunConfigurationStore';
 	import { API_HOST } from '../AppInfo';
 
 	let loaded : boolean = false;
 
-	async function getCachePredictors() {
-		await fetch("http://" + $API_HOST + "/available/cachepredictors")
+	async function getUnits() {
+		await fetch("http://" + $API_HOST + "/available/units")
 		.then(r => r.json())
 		.then(data => {
-			cachePredictors.set(data);
+			units.set(data);
 			loaded = true;
 		});
 	}
 
-	getCachePredictors();
+	getUnits();
 </script>
 
 {#if loaded}
-	<label for="selectcachepredictor">Cache predictor: <select name="selectcachepredictor" bind:value={runConfiguration.cachePredictor}>
-		{#each $cachePredictors as cp}
+	<label for="selectcachepredictor">Output unit: <select name="selectcachepredictor" bind:value={runConfiguration.unit}>
+		{#each $units as cp}
 			<option value={cp}>{cp}</option>
 		{/each}
 	</select></label>
 {:else}
-	<span class="temp-text">Loading Cache predictors...</span>
+	<span class="temp-text">Loading units...</span>
 {/if}
 
 <style lang="scss">

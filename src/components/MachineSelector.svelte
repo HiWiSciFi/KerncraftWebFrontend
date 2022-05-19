@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { machines, selectedMachine } from '../ExecutionStore';
+	import { machines } from '../ExecutionStore';
+	import { runConfiguration } from '../RunConfigurationStore';
 	import { API_HOST } from '../AppInfo';
 
 	let loaded : boolean = false;
@@ -17,7 +18,7 @@
 </script>
 
 {#if loaded}
-	<label for="selectmachine">Machine: <select name="selectmachine" bind:value={$selectedMachine}>
+	<label for="selectmachine">Machine: <select name="selectmachine" bind:value={runConfiguration.machine}>
 		{#each $machines as m}
 			<option value={m}>{m}</option>
 		{/each}

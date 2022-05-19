@@ -6,7 +6,7 @@ button {
 	font-family: monospace;
 }
 
-button:hover {
+button:hover, button:focus {
 	background-color: #333333;
 }
 

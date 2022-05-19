@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { definedVarNames, definedVarValues } from '../ExecutionStore';
+	import { runConfiguration } from '../RunConfigurationStore';
 
 	function AddDefine() {
-		definedVarNames.update(v => { v.push("N"); return v; });
-		definedVarValues.update(v => { v.push(1); return v; });
+		runConfiguration.varNames.push("N");
+		runConfiguration.varValues.push(1);
 	}
 
 	function RemoveDefine() {
-		definedVarNames.update(v => { v.pop(); return v; });
-		definedVarValues.update(v => { v.pop(); return v; });
+		runConfiguration.varNames.pop();
+		runConfiguration.varValues.pop();
 	}
 </script>
 
@@ -21,10 +21,10 @@
 					<th style="text-align: left;">Name</th>
 					<th style="text-align: right;">Value</th>
 				</tr>
-				{#each $definedVarNames as _, i}
+				{#each runConfiguration.varNames as _, i}
 					<tr>
-						<th><input placeholder="Name" type="text" maxlength="1" bind:value={$definedVarNames[i]}></th>
-						<th><input placeholder="Value" type="number" step="1" bind:value={$definedVarValues[i]}></th>
+						<th><input placeholder="Name" type="text" maxlength="1" bind:value={runConfiguration.varNames[i]}></th>
+						<th><input placeholder="Value" type="number" step="1" bind:value={runConfiguration.varValues[i]}></th>
 					</tr>
 				{/each}
 			</table>

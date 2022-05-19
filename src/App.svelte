@@ -6,6 +6,7 @@
 	import DefinesSelector from "./components/DefinesSelector.svelte";
 	import MachineSelector from "./components/MachineSelector.svelte";
 	import PModelSelector from "./components/PModelSelector.svelte";
+import UnitSelector from "./components/UnitSelector.svelte";
 </script>
 
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
@@ -14,6 +15,7 @@
 	<CodeWindow/><br/>
 	<MachineSelector/> <PModelSelector/> <CachePSelector/> <CoresSelector/><br/>
 	<DefinesSelector/><br/>
+	<UnitSelector/><br/>
 	<AnalyzeButton/>
 </div>
 

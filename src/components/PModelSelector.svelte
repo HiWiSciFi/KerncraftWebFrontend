@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { performanceModels, selectedPerformanceModel } from '../ExecutionStore';
+	import { performanceModels } from '../ExecutionStore';
+	import { runConfiguration } from '../RunConfigurationStore';
 	import { API_HOST } from '../AppInfo';
 
 	let loaded : boolean = false;
@@ -17,7 +18,7 @@
 </script>
 
 {#if loaded}
-	<label for="selectpmodel">Performance model: <select name="selectpmodel" bind:value={$selectedPerformanceModel}>
+	<label for="selectpmodel">Performance model: <select name="selectpmodel" bind:value={runConfiguration.performanceModel}>
 		{#each $performanceModels as pm}
 			<option value={pm}>{pm}</option>
 		{/each}

@@ -5,7 +5,7 @@ select {
 	border-color: #ff3e00;
 }
 
-select:hover {
+select:hover, select:focus {
 	background-color: #333333;
 	cursor: pointer;
 }

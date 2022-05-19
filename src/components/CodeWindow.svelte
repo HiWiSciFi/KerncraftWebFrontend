@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { kernel, kernels } from '../ExecutionStore';
+	import { kernels } from '../ExecutionStore';
+	import { runConfiguration } from '../RunConfigurationStore';
 	import { API_HOST } from '../AppInfo';
 
 	let selectedKernel: string = "";
@@ -15,14 +16,28 @@
 		this.selectionStart = this.selectionEnd = start + 1;
 	}
 
+	let codeWindow : HTMLTextAreaElement;
+
 	async function loadKernel() {
-		kernel.set("Loading Example...");
-		await fetch("http://" + $API_HOST + "/examples/kernels/" + selectedKernel)
+		let toLoad : string = selectedKernel;
+		selectedKernel = "";
+		codeWindow.placeholder = "Loading Example...";
+		await fetch("http://" + $API_HOST + "/examples/kernels/" + toLoad)
 		.then(r => r.json())
 		.then(data => {
-			kernel.set(data);
-			selectedKernel = "";
+			runConfiguration.kernel = data;
+			codeWindow.placeholder = "Input Kernel here...";
+			
+		}).then(() => {
+			resizeTextArea();
+		}).catch(err => {
+			console.log(err);
 		});
+	}
+
+	function resizeTextArea() {
+		codeWindow.style.height = "auto";
+		codeWindow.style.height = codeWindow.scrollHeight + "px";
 	}
 
 	let loaded : boolean = false;
@@ -51,7 +66,7 @@
 		<span class="temp-text">Loading Examples...</span>
 	{/if}
 	<br/>
-	<textarea placeholder="Input Kernel here..." bind:value={$kernel} on:keydown={handleKey}/><br/>
+	<textarea bind:this={codeWindow} on:input={resizeTextArea} placeholder="Input Kernel here..." bind:value={runConfiguration.kernel} on:keydown={handleKey}/><br/>
 </div>
 
 <style lang="scss">
@@ -64,7 +79,9 @@
 		background-color: #1e1e1e;
 		resize: none;
 		width: 50vw;
-		height:33.3vh;
+		height: 33.3vh;
+		overflow-x: scroll;
+		overflow-y: hidden;
 
 		font-family: 'Roboto Mono';
 	}

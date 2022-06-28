@@ -18,7 +18,7 @@
 </script>
 
 {#if loaded}
-	<label for="selectcachepredictor">Output unit: <select name="selectcachepredictor" bind:value={runConfiguration.unit}>
+	<label for="selectcachepredictor">Output unit: <br/><select name="selectcachepredictor" bind:value={runConfiguration.unit}>
 		{#each $units as cp}
 			<option value={cp}>{cp}</option>
 		{/each}

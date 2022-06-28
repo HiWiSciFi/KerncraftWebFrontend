@@ -18,7 +18,7 @@
 </script>
 
 {#if loaded}
-	<label for="selectcachepredictor">Cache predictor: <select name="selectcachepredictor" bind:value={runConfiguration.cachePredictor}>
+	<label for="selectcachepredictor">Cache predictor: <br/><select name="selectcachepredictor" bind:value={runConfiguration.cachePredictor}>
 		{#each $cachePredictors as cp}
 			<option value={cp}>{cp}</option>
 		{/each}

@@ -17,7 +17,7 @@
 		console.log(JSON.stringify(runConfiguration));
 
 		fetch(
-			"http://" + $API_HOST + "/analyze",
+			"http://" + $API_HOST + "/analyze/" + Date.now(),
 			{
 				method: "POST",
 				headers: {'Content-Type': 'application/json'},

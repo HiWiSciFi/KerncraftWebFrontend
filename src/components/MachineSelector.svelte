@@ -18,7 +18,7 @@
 </script>
 
 {#if loaded}
-	<label for="selectmachine">Machine: <select name="selectmachine" bind:value={runConfiguration.machine}>
+	<label for="selectmachine">Machine: <br/><select name="selectmachine" bind:value={runConfiguration.machine}>
 		{#each $machines as m}
 			<option value={m}>{m}</option>
 		{/each}

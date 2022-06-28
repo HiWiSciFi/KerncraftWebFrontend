@@ -4,19 +4,21 @@
 	import CodeWindow from "./components/CodeWindow.svelte";
 	import CoresSelector from "./components/CoresSelector.svelte";
 	import DefinesSelector from "./components/DefinesSelector.svelte";
+	import LoadSelector from "./components/LoadSelector.svelte";
 	import MachineSelector from "./components/MachineSelector.svelte";
 	import PModelSelector from "./components/PModelSelector.svelte";
-import UnitSelector from "./components/UnitSelector.svelte";
+	import UnitSelector from "./components/UnitSelector.svelte";
 </script>
 
 <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
 <div class="root">
 	<h1>Kerncraft Web</h1>
-	<CodeWindow/><br/>
-	<MachineSelector/> <PModelSelector/> <CachePSelector/> <CoresSelector/><br/>
-	<DefinesSelector/><br/>
-	<UnitSelector/><br/>
-	<AnalyzeButton/>
+	<div class="ct">
+		<div class="it-defs"><DefinesSelector/></div>
+		<LoadSelector/> <MachineSelector/> <PModelSelector/> <CachePSelector/> <CoresSelector/> <UnitSelector/> <br/>
+		<div class="it-code"><CodeWindow/></div><br/>
+		<div class="it-btn"><AnalyzeButton/></div>
+	</div>
 </div>
 
 <style lang="scss">
@@ -26,6 +28,29 @@ import UnitSelector from "./components/UnitSelector.svelte";
 		width: 100%;
 		height: max(100vh, 100%);
 		background-color: #333333;
+	}
+
+	.ct {
+		display: grid;
+		grid-template-columns: 30em auto auto auto auto auto;
+		width: 75vw;
+		text-align: left;
+	}
+
+	.it-btn {
+		grid-column: 2 / span 6;
+		text-align: center;
+	}
+
+	.it-code {
+		grid-column: 2 / span 6;
+	}
+
+	.it-defs {
+		grid-row: 1 / span 4;
+		padding-right: 5em;
+		padding-left: 5em;
+		text-align: center;
 	}
 
 	.root {

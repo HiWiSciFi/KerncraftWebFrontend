@@ -8,6 +8,7 @@
 	}
 
 	function RemoveDefine() {
+		if (runConfiguration.varNames.length <= 1) return;
 		runConfiguration.varNames.pop();
 		runConfiguration.varValues.pop();
 		runConfiguration.varNames = runConfiguration.varNames;

@@ -18,7 +18,7 @@
 </script>
 
 {#if loaded}
-	<label for="selectpmodel">Performance model: <select name="selectpmodel" bind:value={runConfiguration.performanceModel}>
+	<label for="selectpmodel">Performance model: <br/><select name="selectpmodel" bind:value={runConfiguration.performanceModel}>
 		{#each $performanceModels as pm}
 			<option value={pm}>{pm}</option>
 		{/each}

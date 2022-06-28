@@ -1,11 +1,13 @@
 <script lang="ts">
-	import { kernels } from '../ExecutionStore';
 	import { runConfiguration } from '../RunConfigurationStore';
-	import { API_HOST } from '../AppInfo';
+	import { store } from '../Store';
 
-	let selectedKernel: string = "";
+	import { Highlight } from "svelte-highlight";
+	import c from "svelte-highlight/languages/c";
+	import anOldHope from "svelte-highlight/styles/an-old-hope";
 
 	function handleKey(e: KeyboardEvent) {
+		resizeTextArea();
 		if (e.key != 'Tab') return;
 		if (e.shiftKey) return;
 		e.preventDefault();
@@ -16,86 +18,68 @@
 		this.selectionStart = this.selectionEnd = start + 1;
 	}
 
-	let codeWindow : HTMLTextAreaElement;
-
-	async function loadKernel() {
-		let toLoad : string = selectedKernel;
-		selectedKernel = "";
-		codeWindow.placeholder = "Loading Example...";
-		await fetch("http://" + $API_HOST + "/examples/kernels/" + toLoad)
-		.then(r => r.json())
-		.then(data => {
-			runConfiguration.kernel = data;
-			codeWindow.placeholder = "Input Kernel here...";
-			
-		}).then(() => {
-			resizeTextArea();
-		}).catch(err => {
-			console.log(err);
-		});
-	}
-
 	function resizeTextArea() {
-		codeWindow.style.height = "auto";
-		codeWindow.style.height = codeWindow.scrollHeight + "px";
+		store.codeWindow.style.height = "auto";
+		store.codeWindow.style.height = store.codeWindow.scrollHeight + "px";
+		store.codeEditor.style.height = store.codeWindow.style.height;
 	}
 
-	let loaded : boolean = false;
-
-	async function loadKernels() {
-		await fetch("http://" + $API_HOST + "/examples/kernels")
-		.then(r => r.json())
-		.then(data => {
-			kernels.set(data);
-			loaded = true;
-		});
+	function updateCode() {
+		runConfiguration.kernel = runConfiguration.kernel;
 	}
 
-	loadKernels();
+	$: try { runConfiguration.kernel = runConfiguration.kernel; resizeTextArea(); } catch {}
+
+	store.updateFunc = updateCode;
 </script>
 
+<svelte:head>
+	{@html anOldHope}
+</svelte:head>
 
 <div class="kernelWindowWrapper">
-	{#if loaded}
-		<label for="loadkernels">Load: <select name="loadkernels" class="loadselect" bind:value={selectedKernel} on:change={loadKernel}>
-			{#each $kernels as k}
-				<option value={k}>{k}</option>
-			{/each}
-		</select></label>
-	{:else}
-		<span class="temp-text">Loading Examples...</span>
-	{/if}
-	<br/>
-	<textarea bind:this={codeWindow} on:input={resizeTextArea} placeholder="Input Kernel here..." bind:value={runConfiguration.kernel} on:keydown={handleKey}/><br/>
+	<textarea class="hljs" bind:this={store.codeEditor} placeholder="Input Kernel here..." bind:value={runConfiguration.kernel} on:keydown={handleKey}/>
+	<div bind:this={store.codeWindow} class="codestyle"><Highlight language={c} code={runConfiguration.kernel} /></div>
 </div>
 
 <style lang="scss">
-	@import '../styles/label';
-	@import '../styles/select';
-	@import '../styles/temp-text';
-
 	textarea {
-		color: #dcdcdc;
-		background-color: #1e1e1e;
 		resize: none;
-		width: 50vw;
+		width: 70vw;
 		height: 33.3vh;
 		overflow-x: scroll;
 		overflow-y: hidden;
 
 		font-family: 'Roboto Mono';
+		font-size: .91rem;
+		padding-top: 2.1rem;
+		padding-left: 1rem;
+		display: block;
+
+		color: transparent;
+		background-color: transparent;
+
+		position: absolute;
+		left: 0;
+	}
+
+	.codestyle {
+		font-family: 'Roboto Mono';
+		font-size: 1rem;
+		padding: 0;
+		margin: 0;
+		
+		width: 70vw;
+		height: 33.3vh;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		display: block;
+		background-color: #1e1e1e;
 	}
 
 	.kernelWindowWrapper {
 		display: inline-block;
 		text-align: left;
-	}
-
-	.loadselect {
-		border-radius: 0;
-		border: 0;
-		background-color: #444444;
-		color: #e2e2e2;
-		width: 2ch;
+		position: relative;
 	}
 </style>

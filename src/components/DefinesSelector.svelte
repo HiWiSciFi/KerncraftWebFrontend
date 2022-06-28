@@ -4,11 +4,13 @@
 	function AddDefine() {
 		runConfiguration.varNames.push("N");
 		runConfiguration.varValues.push(1);
+		runConfiguration.varNames = runConfiguration.varNames;
 	}
 
 	function RemoveDefine() {
 		runConfiguration.varNames.pop();
 		runConfiguration.varValues.pop();
+		runConfiguration.varNames = runConfiguration.varNames;
 	}
 </script>
 
